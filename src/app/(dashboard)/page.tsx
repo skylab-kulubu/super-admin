@@ -1,48 +1,67 @@
 "use client";
-import React from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import { useRouter }  from "next/navigation";
 
-export default function DashboardHomePage() {
-  const { user, loading, getRedirectPath, hasRole } = useAuth();
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
+
+export default function DashboardRootPage() {
   const router = useRouter();
+  const { user, loading, hasRole } = useAuth();
 
-  React.useEffect(() => {
-    if (!loading && user) {
-      if (hasRole("ROLE_ADMIN")) {
-        router.replace("/superadmin"); // Redirect ROLE_ADMIN to their dedicated page
+  useEffect(() => {
+    if (!loading) {
+      if (!user) {
+        // This case should ideally be handled by a layout protecting routes,
+        // but as a fallback, redirect to login.
+        router.replace('/login');
+      } else if (hasRole("ROLE_ADMIN")) {
+        // If there's a specific /superadmin page, redirect there.
+        // For now, this page can serve as the superadmin's root dashboard.
+        // Example: router.replace('/superadmin'); if /superadmin/page.tsx exists
+        // If not, this page itself is the superadmin dashboard.
+      } else if (hasRole("ROLE_BIZBIZE_ADMIN")) {
+        router.replace('/bizbize');
+      } else if (hasRole("ROLE_GECEKODU_ADMIN")) {
+        router.replace('/gecekodu');
+      } else if (hasRole("ROLE_AGC_ADMIN")) {
+        router.replace('/agc');
       } else {
-        // For non-admin users, redirect if they land on "/" and have a specific team path
-        const path = getRedirectPath(); 
-        if (path && path !== "/" && path !== "/login" && path !== "/superadmin") { 
-          router.replace(path);
-        }
+        // If user has no specific admin/tenant roles, redirect to an error page.
+        router.replace('/403');
       }
     }
-  }, [user, loading, router, getRedirectPath, hasRole]);
+  }, [user, loading, hasRole, router]);
 
-
-  if (loading || (user && hasRole("ROLE_ADMIN"))) { // Show loader if loading or if admin (will be redirected)
+  if (loading || !user) {
     return (
-      <div className="p-6 space-y-4">
-        <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-3/4 animate-pulse"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 animate-pulse"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 animate-pulse"></div>
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
+        <p className="ml-4 text-lg text-gray-700 dark:text-gray-200">Yükleniyor...</p>
       </div>
     );
   }
-  
-  // This content will be shown to non-admin users who don't have a specific team redirect
-  // or if redirection hasn't happened yet.
+
+  // Display content for ROLE_ADMIN if not redirecting them elsewhere
+  if (hasRole("ROLE_ADMIN")) {
+    return (
+      <div className="p-6">
+        <h1 className="text-3xl font-semibold text-gray-800 dark:text-white">Ana Sayfa</h1>
+        <p className="mt-4 text-gray-600 dark:text-gray-300">
+          Yönetim paneline hoş geldiniz. Soldaki menüyü kullanarak ilgili bölümlere ulaşabilirsiniz.
+        </p>
+        {/* 
+          You can add specific dashboard widgets or summaries for ROLE_ADMIN here.
+          For example, quick stats, links to common tasks, etc.
+        */}
+      </div>
+    );
+  }
+
+  // Fallback content while redirection is in progress for other roles
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">
-        Yönetim Paneline Hoş Geldiniz!
-      </h1>
-      <p className="text-gray-600 dark:text-gray-300">
-        Sol taraftaki menüden size atanmış bölümlere geçiş yapabilirsiniz.
-      </p>
-      {/* This page can be a generic welcome or info page for users who land here */}
+    <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      <p className="ml-4 text-lg text-gray-700 dark:text-gray-200">Yönlendiriliyorsunuz...</p>
     </div>
   );
 }
