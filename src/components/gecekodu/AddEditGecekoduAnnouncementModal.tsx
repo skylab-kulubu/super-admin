@@ -96,7 +96,7 @@ const AddEditGecekoduAnnouncementModal: React.FC<AddEditGecekoduAnnouncementModa
           </button>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Input label="Başlık" {...register('title', { required: 'Başlık zorunludur.' })} error={errors.title?.message} />
+          <Input id={'title'} label="Başlık" {...register('title', { required: 'Başlık zorunludur.' })} error={errors.title?.message} />
           <div>
             <label htmlFor="contentGKAnn" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">İçerik</label>
             <textarea
@@ -110,7 +110,7 @@ const AddEditGecekoduAnnouncementModal: React.FC<AddEditGecekoduAnnouncementModa
 
           {!isEditMode && (
             <>
-              <Input label="Yayın Tarihi ve Saati" type="datetime-local" {...register('date', { required: 'Tarih zorunludur.' })} error={errors.date?.message} />
+              <Input id={'date'} label="Yayın Tarihi ve Saati" type="datetime-local" {...register('date', { required: 'Tarih zorunludur.' })} error={errors.date?.message} />
               <div className="flex items-center">
                 <Controller
                   name="isActive"

@@ -112,9 +112,9 @@ const AddEditAgcEventModal: React.FC<AddEditAgcEventModalProps> = ({ isOpen, onC
           </button>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Input label="Başlık" {...register('title', { required: 'Başlık zorunludur.' })} error={errors.title?.message} />
-          <Input label="Tarih ve Saat" type="datetime-local" {...register('date', { required: 'Tarih zorunludur.' })} error={errors.date?.message} />
-          <Input label="Etkinlik Tipi (örn: SEMINAR, CONFERENCE)" {...register('type')} error={errors.type?.message} />
+          <Input id={'title'} label="Başlık" {...register('title', { required: 'Başlık zorunludur.' })} error={errors.title?.message} />
+          <Input id={'date'} label="Tarih ve Saat" type="datetime-local" {...register('date', { required: 'Tarih zorunludur.' })} error={errors.date?.message} />
+          <Input id={'type'} label="Etkinlik Tipi (örn: SEMINAR, CONFERENCE)" {...register('type')} error={errors.type?.message} />
           <div>
             <label htmlFor="descriptionAGCEvent" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Açıklama</label>
             <textarea
@@ -124,8 +124,8 @@ const AddEditAgcEventModal: React.FC<AddEditAgcEventModalProps> = ({ isOpen, onC
               className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
             />
           </div>
-          <Input label="LinkedIn (Etkinlik/Organizatör)" type="url" {...register('linkedin')} error={errors.linkedin?.message} />
-          <Input label="Form URL (opsiyonel)" type="url" {...register('formUrl')} error={errors.formUrl?.message} />
+          <Input id={'linkedin'} label="LinkedIn (Etkinlik/Organizatör)" type="url" {...register('linkedin')} error={errors.linkedin?.message} />
+          <Input id={'url'} label="Form URL (opsiyonel)" type="url" {...register('formUrl')} error={errors.formUrl?.message} />
           <div className="flex items-center">
             <Controller
               name="isActive"

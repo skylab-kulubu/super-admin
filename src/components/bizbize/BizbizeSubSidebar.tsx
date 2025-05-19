@@ -15,7 +15,7 @@ const BizbizeSubSidebar = () => {
   const pathname = usePathname();
 
   const isActive = (href: string) => {
-    return pathname.startsWith(href);
+    return pathname?.startsWith(href);
   };
 
   return (

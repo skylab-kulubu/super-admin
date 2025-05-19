@@ -11,7 +11,7 @@ import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 
 type LoginFormInputs = {
-  username: string; // Changed from email to username
+  usernameOrEmail: string; // Changed from email to username
   sifre: string; // "Şifre" field, matching API or transforming
 };
 
@@ -27,7 +27,7 @@ export default function LoginPage() {
       const response = await axios.post(
         "https://api.yildizskylab.com/api/auth/login",
         {
-          username: data.username, // Now directly using data.username
+          usernameOrEmail: data.usernameOrEmail, // Changed from username to usernameOrEmail
           password: data.sifre,
         }
       );
@@ -93,13 +93,15 @@ export default function LoginPage() {
       <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <Input
           label="Kullanıcı Adı" // Changed label
+          id="usernameOrEmail" // Added id
           type="text" // Changed type
           autoComplete="username" // Changed autoComplete
-          {...register("username", { required: "Kullanıcı Adı alanı zorunludur." })} // Changed field name and message
-          error={errors.username?.message} // Changed error field
+          {...register("usernameOrEmail", { required: "Kullanıcı Adı alanı zorunludur." })} // Changed field name and message
+          error={errors.usernameOrEmail?.message} // Changed error field
         />
         <Input
           label="Şifre"
+          id="sifre" // Added id
           type="password"
           autoComplete="current-password"
           {...register("sifre", { required: "Şifre alanı zorunludur." })}

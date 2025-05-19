@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react"; // useEffect was already there
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
-import { HomeIcon, ArrowLeftOnRectangleIcon, UserGroupIcon, ShieldCheckIcon, ChevronDownIcon, ChevronRightIcon, CalendarDaysIcon, UsersIcon as StaffIcon, MegaphoneIcon as AnnouncementIcon, CodeBracketSquareIcon } from "@heroicons/react/24/outline";
+import { HomeIcon, ArrowLeftOnRectangleIcon, UserGroupIcon, ShieldCheckIcon, ChevronDownIcon, ChevronRightIcon, CalendarDaysIcon, UsersIcon as StaffIcon, MegaphoneIcon as AnnouncementIcon, CodeBracketSquareIcon, ChartBarIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 
 interface NavSubItem {
@@ -61,6 +61,7 @@ const Sidebar = () => {
         { href: "/agc/events", label: "Etkinlik Yönetimi", icon: CalendarDaysIcon },
         { href: "/agc/staff", label: "Ekip Yönetimi", icon: StaffIcon },
         { href: "/agc/announcements", label: "Duyuru Yönetimi", icon: AnnouncementIcon },
+        { href: "/agc/seasons", label: "Sezon Yönetimi", icon: ChartBarIcon },
       ]
     },
   ];
@@ -71,16 +72,16 @@ const Sidebar = () => {
 
   const isActive = (href?: string, currentItem?: NavItem) => {
     if (currentItem?.subItems) { // For parent items of submenus (accordion header)
-      return currentItem.subItems.some(sub => pathname.startsWith(sub.href));
+      return currentItem.subItems.some(sub => pathname?.startsWith(sub.href));
     }
     if (!href) return false;
     // For direct links or sub-items
     if (href === "/" || href === "/superadmin") return pathname === href;
-    return pathname.startsWith(href);
+    return pathname?.startsWith(href);
   };
   
   useEffect(() => {
-    const activeParent = navItems.find(item => item.subItems?.some(sub => pathname.startsWith(sub.href)));
+    const activeParent = navItems.find(item => item.subItems?.some(sub => pathname?.startsWith(sub.href)));
     if (activeParent) {
       setOpenSubMenu(activeParent.id);
     }

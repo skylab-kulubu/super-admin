@@ -15,7 +15,7 @@ interface AddUserModalProps {
 }
 
 type AddUserFormInputs = {
-  username: string;
+  usernameOrEmail: string;
   password?: string; // Optional if API generates one or it's set later
 };
 
@@ -62,12 +62,14 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose, onUserAdde
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <Input
             label="Kullanıcı Adı"
+            id="usernameOrEmail" // Added id
             type="text"
-            {...register('username', { required: 'Kullanıcı adı zorunludur.' })}
-            error={errors.username?.message}
+            {...register('usernameOrEmail', { required: 'Kullanıcı adı zorunludur.' })}
+            error={errors.usernameOrEmail?.message}
           />
           <Input
             label="Şifre"
+            id="password" // Added id
             type="password"
             {...register('password', { required: 'Şifre zorunludur.', minLength: { value: 6, message: "Şifre en az 6 karakter olmalıdır."} })}
             error={errors.password?.message}

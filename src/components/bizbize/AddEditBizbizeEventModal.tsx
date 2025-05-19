@@ -118,11 +118,11 @@ const AddEditBizbizeEventModal: React.FC<AddEditBizbizeEventModalProps> = ({ isO
           </button>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Input label="Misafir Adı" {...register('guestName', { required: 'Misafir adı zorunludur.' })} error={errors.guestName?.message} />
-          <Input label="Başlık/Pozisyon" {...register('title', { required: 'Başlık zorunludur.' })} error={errors.title?.message} />
-          <Input label="Tarih ve Saat" type="datetime-local" {...register('date', { required: 'Tarih zorunludur.' })} error={errors.date?.message} />
-          <Input label="LinkedIn Profili (URL)" type="url" {...register('linkedin')} error={errors.linkedin?.message} />
-          <Input label="Etkinlik Tipi (örn: TALK, WORKSHOP)" {...register('type', { required: 'Tip zorunludur.' })} error={errors.type?.message} />
+          <Input id={'guestName'} label="Misafir Adı" {...register('guestName', { required: 'Misafir adı zorunludur.' })} error={errors.guestName?.message} />
+          <Input id={'title'} label="Başlık/Pozisyon" {...register('title', { required: 'Başlık zorunludur.' })} error={errors.title?.message} />
+          <Input id={'date'} label="Tarih ve Saat" type="datetime-local" {...register('date', { required: 'Tarih zorunludur.' })} error={errors.date?.message} />
+          <Input id={'linkedin'} label="LinkedIn Profili (URL)" type="url" {...register('linkedin')} error={errors.linkedin?.message} />
+          <Input id={'type'} label="Etkinlik Tipi (örn: TALK, WORKSHOP)" {...register('type', { required: 'Tip zorunludur.' })} error={errors.type?.message} />
           <div>
             <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Açıklama</label>
             <textarea
@@ -132,7 +132,7 @@ const AddEditBizbizeEventModal: React.FC<AddEditBizbizeEventModalProps> = ({ isO
               className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
             />
           </div>
-          <Input label="Form URL (opsiyonel)" type="url" {...register('formUrl')} error={errors.formUrl?.message} />
+          <Input id={'url'} label="Form URL (opsiyonel)" type="url" {...register('formUrl')} error={errors.formUrl?.message} />
           <div className="flex items-center">
             <Controller
               name="isActive"

@@ -148,10 +148,10 @@ const AddEditAgcStaffModal: React.FC<AddEditAgcStaffModalProps> = ({ isOpen, onC
              {isEditMode && <p className="text-xs text-gray-500 dark:text-gray-400">Fotoğraf güncelleme bu ekrandan desteklenmemektedir.</p>}
           </div>
 
-          <Input label="Ad" {...register('firstName', { required: 'Ad zorunludur.' })} error={errors.firstName?.message} />
-          <Input label="Soyad" {...register('lastName', { required: 'Soyad zorunludur.' })} error={errors.lastName?.message} />
-          <Input label="Departman" {...register('department')} error={errors.department?.message} />
-          <Input label="LinkedIn Profili (URL)" type="url" {...register('linkedin')} error={errors.linkedin?.message} />
+          <Input id={'name'} label="Ad" {...register('firstName', { required: 'Ad zorunludur.' })} error={errors.firstName?.message} />
+          <Input id={'surname'} label="Soyad" {...register('lastName', { required: 'Soyad zorunludur.' })} error={errors.lastName?.message} />
+          <Input id={'department'} label="Departman" {...register('department')} error={errors.department?.message} />
+          <Input id={'linkedin'} label="LinkedIn Profili (URL)" type="url" {...register('linkedin')} error={errors.linkedin?.message} />
           
           <div className="flex justify-end space-x-3 pt-4">
             <Button type="button" variant="secondary" onClick={onClose} disabled={isLoading}>İptal</Button>

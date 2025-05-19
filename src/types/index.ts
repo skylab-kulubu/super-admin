@@ -290,6 +290,59 @@ export interface UpdateAgcAnnouncementPayload extends UpdateGecekoduAnnouncement
   // id, title, content are already in UpdateGecekoduAnnouncementPayload
 }
 
+// AGC Season and Competitor Types
+export type CompetitorId = string;
+export type SeasonId = number;
+
+export interface Competitor {
+  id: CompetitorId;
+  name: string;
+  tenant: "AGC";
+  totalPoints: number;
+  competitionCount: number;
+  isActive: boolean;
+  createdAt?: string; // From Competitor Java class, but not in getAllSeasonsByTenant response example
+  updatedAt?: string; // From Competitor Java class
+}
+
+export interface Season {
+  id: SeasonId;
+  name: string;
+  startDate: string; // API response format: "yyyy-MM-dd HH:mm:ss.S"
+  endDate: string;   // API response format: "yyyy-MM-dd HH:mm:ss.S"
+  tenant: "AGC";
+  isActive: boolean;
+  competitors: Competitor[];
+}
+
+export interface AddCompetitorPayload {
+  name: string;
+  tenant: "AGC";
+  isActive: boolean;
+  totalPoints: number;
+  competitionCount: number;
+}
+
+// For adding a season, API expects "dd-MM-yyyy" for dates
+export interface AddSeasonPayload {
+  name: string;
+  startDate: string; // Format: "dd-MM-yyyy"
+  endDate: string;   // Format: "dd-MM-yyyy"
+  tenant: "AGC";
+  isActive: boolean;
+  competitorIds: CompetitorId[];
+}
+
+export interface UpdateSeasonPayload {
+  id: SeasonId;
+  name?: string;
+  startDate?: string; // Format: "dd-MM-yyyy"
+  endDate?: string;   // Format: "dd-MM-yyyy"
+  isActive?: boolean;
+  // competitorIds are typically managed via separate endpoints (addCompetitorToSeason, removeCompetitorFromSeason)
+  // and not directly in the season update payload.
+}
+
 export interface PhotoMetadata {
     id: string;
     photoUrl: string;
