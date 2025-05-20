@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react"; // useEffect was already there
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
-import { HomeIcon, ArrowLeftOnRectangleIcon, UserGroupIcon, ShieldCheckIcon, ChevronDownIcon, ChevronRightIcon, CalendarDaysIcon, UsersIcon as StaffIcon, MegaphoneIcon as AnnouncementIcon, CodeBracketSquareIcon, ChartBarIcon } from "@heroicons/react/24/outline";
+import { HomeIcon, ArrowLeftOnRectangleIcon, UserGroupIcon, ShieldCheckIcon, ChevronDownIcon, ChevronRightIcon, CalendarDaysIcon, UsersIcon as StaffIcon, MegaphoneIcon as AnnouncementIcon, CodeBracketSquareIcon, ChartBarIcon, KeyIcon } from "@heroicons/react/24/outline"; // Added KeyIcon
 import { usePathname } from "next/navigation";
 
 interface NavSubItem {
@@ -163,6 +163,13 @@ const Sidebar = () => {
           <div className="mb-4 p-2 rounded bg-gray-700">
             <p className="text-sm font-medium text-white">{user.email}</p>
             <p className="text-xs text-gray-400">{user.roles.join(", ")}</p>
+            <Link 
+              href="/profile/change-password" 
+              className="mt-2 flex items-center text-xs text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              <KeyIcon className="h-4 w-4 mr-1" />
+              Şifre Değiştir
+            </Link>
           </div>
         )}
         <button

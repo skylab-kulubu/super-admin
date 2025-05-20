@@ -4,14 +4,15 @@ import React from 'react';
 import { ApiUser } from '@/types';
 import RoleBadge from '@/components/RoleBadge';
 import Button from '@/components/ui/Button';
-import { PencilSquareIcon } from '@heroicons/react/24/outline';
+import { PencilSquareIcon, KeyIcon as ResetPasswordIcon } from '@heroicons/react/24/outline';
 
 interface UserTableProps {
   users: ApiUser[];
   onEditRoles: (user: ApiUser) => void;
+  onResetPassword: (username: string) => void;
 }
 
-const UserTable: React.FC<UserTableProps> = ({ users, onEditRoles }) => {
+const UserTable: React.FC<UserTableProps> = ({ users, onEditRoles, onResetPassword }) => {
   const formatDate = (dateString: string) => {
     if (!dateString) return 'N/A';
     try {
@@ -56,15 +57,21 @@ const UserTable: React.FC<UserTableProps> = ({ users, onEditRoles }) => {
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200">{formatDate(user.createdAt)}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200">{formatDate(user.lastLogin)}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                 <Button
                   variant="secondary"
-                  // Removed size prop as it is not supported by the Button component
                   onClick={() => onEditRoles(user)}
-                  className="text-primary hover:text-red-700 dark:text-primary dark:hover:text-red-400 !p-1.5" // Example of smaller padding
+                  className="text-primary hover:text-red-700 dark:text-primary dark:hover:text-red-400 !p-1.5"
                 >
                   <PencilSquareIcon className="h-5 w-5" />
                   <span className="sr-only">Rolleri Düzenle</span>
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => onResetPassword(user.username)}
+                  aria-label={`${user.username} şifresini sıfırla`}
+                >
+                  <ResetPasswordIcon className="h-4 w-4 mr-1 sm:mr-0" /> <span className="hidden sm:inline">Şifre Sıfırla</span>
                 </Button>
               </td>
             </tr>

@@ -15,8 +15,9 @@ interface AddUserModalProps {
 }
 
 type AddUserFormInputs = {
-  usernameOrEmail: string;
-  password?: string; // Optional if API generates one or it's set later
+  username: string; // Changed from usernameOrEmail
+  email: string;
+  password?: string; 
 };
 
 const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose, onUserAdded }) => {
@@ -26,15 +27,18 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose, onUserAdde
   const onSubmit: SubmitHandler<AddUserFormInputs> = async (data) => {
     setIsLoading(true);
     try {
-      // API expects username and password. If password is not provided,
-      // ensure your API handles this (e.g., by generating one or erroring).
-      // For this example, we'll make password required.
       if (!data.password) {
         toast.error("Şifre alanı zorunludur.");
         setIsLoading(false);
         return;
       }
-      await api.post('/users/addUser', data);
+      // API expects username, password, email
+      const payload = {
+        username: data.username,
+        email: data.email,
+        password: data.password,
+      };
+      await api.post('/users/addUser', payload);
       toast.success('Kullanıcı başarıyla eklendi!');
       onUserAdded();
       reset();
@@ -62,14 +66,27 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose, onUserAdde
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <Input
             label="Kullanıcı Adı"
-            id="usernameOrEmail" // Added id
+            id="username" // Changed id
             type="text"
-            {...register('usernameOrEmail', { required: 'Kullanıcı adı zorunludur.' })}
-            error={errors.usernameOrEmail?.message}
+            {...register('username', { required: 'Kullanıcı adı zorunludur.' })} // Changed field name
+            error={errors.username?.message}
+          />
+          <Input
+            label="E-posta"
+            id="email"
+            type="email"
+            {...register('email', { 
+              required: 'E-posta zorunludur.',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Geçersiz e-posta adresi"
+              }
+            })}
+            error={errors.email?.message}
           />
           <Input
             label="Şifre"
-            id="password" // Added id
+            id="password"
             type="password"
             {...register('password', { required: 'Şifre zorunludur.', minLength: { value: 6, message: "Şifre en az 6 karakter olmalıdır."} })}
             error={errors.password?.message}
