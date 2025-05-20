@@ -67,11 +67,14 @@ const UserTable: React.FC<UserTableProps> = ({ users, onEditRoles, onResetPasswo
                   <span className="sr-only">Rolleri Düzenle</span>
                 </Button>
                 <Button
-                  variant="danger"
+                  variant="danger" // Using danger variant for sensitive action
                   onClick={() => onResetPassword(user.username)}
                   aria-label={`${user.username} şifresini sıfırla`}
+                  className="!p-1.5" // Ensure padding is applied for icon-only button
+                  title="Şifreyi Sıfırla" // Add title for hover tooltip
                 >
-                  <ResetPasswordIcon className="h-4 w-4 mr-1 sm:mr-0" /> <span className="hidden sm:inline">Şifre Sıfırla</span>
+                  <ResetPasswordIcon className="h-5 w-5" /> 
+                  <span className="sr-only">Şifre Sıfırla</span>
                 </Button>
               </td>
             </tr>
