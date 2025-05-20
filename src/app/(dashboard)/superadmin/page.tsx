@@ -87,7 +87,9 @@ export default function SuperAdminPage() {
         </Button>
       </div>
       
-      <UserTable users={users} onEditRoles={handleOpenEditRolesModal} />
+      <UserTable users={users} onEditRoles={handleOpenEditRolesModal} onResetPassword={function (username: string): void {
+        throw new Error("Function not implemented.");
+      } } />
 
       <AddUserModal
         isOpen={isAddUserModalOpen}
