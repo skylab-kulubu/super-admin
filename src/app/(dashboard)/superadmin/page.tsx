@@ -61,6 +61,20 @@ export default function SuperAdminPage() {
     fetchUsers(); // Refetch users after a new user is added
   };
 
+  const handleResetPassword = async (username: string) => {
+    if (!window.confirm(`${username} adlı kullanıcının şifresini sıfırlamak istediğinizden emin misiniz? Bu işlem geri alınamaz.`)) {
+      return;
+    }
+    try {
+      await api.post('/users/resetPassword', { username });
+      toast.success(`${username} kullanıcısının şifresi başarıyla sıfırlandı.`);
+      // No need to refetch users list as password change is backend only and doesn't affect user data shown in table.
+    } catch (error: any) {
+      console.error("Reset password error:", error);
+      toast.error(error.response?.data?.message || 'Şifre sıfırlanırken bir hata oluştu.');
+    }
+  };
+
   if (authLoading || isLoadingUsers && hasRole("ROLE_ADMIN")) {
     return (
       <div className="p-6 space-y-4">
@@ -87,9 +101,11 @@ export default function SuperAdminPage() {
         </Button>
       </div>
       
-      <UserTable users={users} onEditRoles={handleOpenEditRolesModal} onResetPassword={function (username: string): void {
-        throw new Error("Function not implemented.");
-      } } />
+      <UserTable 
+        users={users} 
+        onEditRoles={handleOpenEditRolesModal} 
+        onResetPassword={handleResetPassword} // Pass the implemented function
+      />
 
       <AddUserModal
         isOpen={isAddUserModalOpen}
