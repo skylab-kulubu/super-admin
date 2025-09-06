@@ -38,7 +38,7 @@ export default function GecekoduAnnouncementsPage() {
       }
     } catch (error) {
       console.error("Fetch GeceKodu announcements error:", error);
-      toast.error('Duyurular getirilirken bir hata oluştu.');
+      toast.error('Duyurular getirilirken bir hata oluştu.', { id: 'fetch-announcements-error' });
     } finally {
       setIsLoadingAnnouncements(false);
     }

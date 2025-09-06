@@ -37,7 +37,7 @@ export default function AgcAnnouncementsPage() {
       }
     } catch (error) {
       console.error("Fetch AGC announcements error:", error);
-      toast.error('Duyurular getirilirken bir hata oluştu.');
+      toast.error('Duyurular getirilirken bir hata oluştu.', { id: 'fetch-announcements-error' });
     } finally {
       setIsLoadingAnnouncements(false);
     }

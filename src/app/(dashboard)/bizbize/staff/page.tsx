@@ -32,7 +32,7 @@ export default function BizbizeStaffPage() {
       }
     } catch (error) {
       console.error("Fetch staff error:", error);
-      toast.error('Ekip üyeleri getirilirken bir hata oluştu.');
+      toast.error('Ekip üyeleri getirilirken bir hata oluştu.', { id: 'fetch-staff-error' });
     } finally {
       setIsLoadingStaff(false);
     }

@@ -38,7 +38,7 @@ export default function GecekoduEventsPage() {
       }
     } catch (error) {
       console.error("Fetch GeceKodu events error:", error);
-      toast.error('GeceKodu etkinlikleri getirilirken bir hata oluştu.');
+      toast.error('GeceKodu etkinlikleri getirilirken bir hata oluştu.', { id: 'fetch-gecekodu-events-error' });
     } finally {
       setIsLoadingEvents(false);
     }
