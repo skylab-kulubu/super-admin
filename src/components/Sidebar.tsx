@@ -26,7 +26,7 @@ const Sidebar = () => {
   const { user, logout, hasRole } = useAuth();
   const pathname = usePathname();
   const isSuperAdmin = user?.roles?.includes("ROLE_ADMIN") || false;
-  const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
+  const [openSubMenu, setOpenSubMenu] = useState<string[]>([]);
 
   const navItems: NavItem[] = [
     { id: "home", href: isSuperAdmin ? "/superadmin" : "/", label: "Ana Sayfa", icon: HomeIcon },
@@ -67,7 +67,11 @@ const Sidebar = () => {
   ];
 
   const toggleSubMenu = (id: string) => {
-    setOpenSubMenu(openSubMenu === id ? null : id);
+    setOpenSubMenu(prev => 
+      prev.includes(id) 
+        ? prev.filter(openId => openId !== id) // kapat
+        : [...prev, id] // aç
+    );
   };
 
   const isActive = (href?: string, currentItem?: NavItem) => {
@@ -81,11 +85,10 @@ const Sidebar = () => {
   };
   
   useEffect(() => {
-    const activeParent = navItems.find(item => item.subItems?.some(sub => pathname?.startsWith(sub.href)));
-    if (activeParent) {
-      setOpenSubMenu(activeParent.id);
-    }
-  }, [pathname, navItems]);
+  const activeParents = navItems.filter(item => item.subItems?.some(sub => pathname?.startsWith(sub.href)));
+  setOpenSubMenu(activeParents.map(item => item.id));
+  // navItems bağımlılıktan çıkarıldı
+  }, [pathname]);
 
   const accessibleNavItems = navItems.filter(item => {
     if (item.adminOnly) {
@@ -112,7 +115,7 @@ const Sidebar = () => {
                 <button
                   onClick={() => toggleSubMenu(item.id)}
                   className={`flex items-center justify-between w-full p-3 rounded-md transition-colors text-left ${
-                    isActive(undefined, item) || openSubMenu === item.id 
+                    isActive(undefined, item) || openSubMenu.includes(item.id) 
                       ? "bg-gray-700 text-white" 
                       : "hover:bg-gray-700 text-gray-300 hover:text-white"
                   }`}
@@ -121,9 +124,9 @@ const Sidebar = () => {
                     <item.icon className="h-6 w-6 mr-3 flex-shrink-0" />
                     {item.label}
                   </div>
-                  {openSubMenu === item.id ? <ChevronDownIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
+                  {openSubMenu.includes(item.id) ? <ChevronDownIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
                 </button>
-                {openSubMenu === item.id && (
+                {openSubMenu.includes(item.id) && (
                   <div className="pl-6 mt-1 space-y-1">
                     {item.subItems.map((subItem) => (
                       <Link
