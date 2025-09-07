@@ -37,7 +37,7 @@ export default function BizBizeEventsPage() { // Renamed component
       }
     } catch (error) {
       console.error("Fetch BizBize events error:", error);
-      toast.error('BizBize etkinlikleri getirilirken bir hata oluştu.');
+      toast.error('BizBize etkinlikleri getirilirken bir hata oluştu.', { id: 'fetch-bizbize-events-error' });
     } finally {
       setIsLoadingEvents(false);
     }

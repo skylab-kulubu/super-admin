@@ -37,7 +37,7 @@ export default function AgcEventsPage() {
       }
     } catch (error) {
       console.error("Fetch AGC events error:", error);
-      toast.error('AGC etkinlikleri getirilirken bir hata oluştu.');
+      toast.error('AGC etkinlikleri getirilirken bir hata oluştu.', { id: 'fetch-agc-events-error' });
     } finally {
       setIsLoadingEvents(false);
     }

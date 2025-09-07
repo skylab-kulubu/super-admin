@@ -38,7 +38,7 @@ export default function AgcSeasonsPage() {
       }
     } catch (error) {
       console.error("Fetch AGC seasons error:", error);
-      toast.error('Sezonlar getirilirken bir hata oluştu.');
+      toast.error('Sezonlar getirilirken bir hata oluştu.', { id: 'fetch-seasons-error' });
     } finally {
       setIsLoading(false);
     }

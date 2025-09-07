@@ -37,7 +37,7 @@ export default function BizbizeAnnouncementsPage() {
       }
     } catch (error) {
       console.error("Fetch announcements error:", error);
-      toast.error('Duyurular getirilirken bir hata oluştu.');
+      toast.error('Duyurular getirilirken bir hata oluştu.', { id: 'fetch-announcements-error' });
     } finally {
       setIsLoadingAnnouncements(false);
     }
